@@ -1,0 +1,4 @@
+facility_id,period_iso,energy_elec_kwh,scope_1_direct_tco2e,scope_2_indirect_tco2e,water_withdrawal_m3,svhc_mass_kg
+FAC-EU-01,2026-01,450500,120.4,85.2,1500,12.4
+FAC-SEA-02,2026-01,890200,310.5,0.0,402000,45.2
+FAC-SEA-02,2026-02,5000,100,1.2,3200,30

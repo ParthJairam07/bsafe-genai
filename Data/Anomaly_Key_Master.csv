@@ -1,0 +1,17 @@
+LUMINATECH SYSTEMS: GLOBAL ENVIRONMENTAL COMPLIANCE MANDATE (v2026.1)
+
+RULE_ID: E1-GHG-001
+DESCRIPTION: Facility emissions must correlate to energy draw. 
+THRESHOLD: Any facility with energy_elec_kwh > 0 cannot report 0.0 for Scope 2 emissions.
+
+RULE_ID: E3-WATER-002
+DESCRIPTION: Standard unit for water reporting is Cubic Meters (m3).
+THRESHOLD: Any single facility reporting > 10,000 m3 per month is flagged for "Unit Mismatch Error" (Potential Gallon-to-Meter conversion failure).
+
+RULE_ID: E5-SUPPLIER-003
+DESCRIPTION: High-risk mineral procurement (Cobalt/Lithium).
+THRESHOLD: All suppliers in 'Cobalt_Batteries' category must have sbti_verified = TRUE and recycled_input_rate >= 0.20.
+
+RULE_ID: DATA-INT-004
+DESCRIPTION: Reporting Period Uniqueness.
+THRESHOLD: No duplicate entries allowed for the same Facility ID and Period ISO.

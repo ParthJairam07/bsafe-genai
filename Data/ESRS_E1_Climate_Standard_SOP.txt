@@ -1,0 +1,9 @@
+Focus: Greenhouse Gas Emissions and Energy Validation
+
+LuminaTech Corporate Policy: E1-Energy-Audit
+
+1. Scope: All manufacturing facilities (Scope 1 and 2).
+2. Energy Correlation Rule: > * Any facility reporting electricity consumption (energy_elec_kwh) greater than 1,000 kWh must provide a non-zero value for Indirect Emissions (scope_2_indirect_tco2e).
+
+Anomaly Action: Any row where Energy > 1,000 and Scope 2 = 0 must be flagged as a "Sensor Failure / Data Integrity Error."
+3. Statistical Variance: > * Facility emissions are expected to remain within a 30% variance of the previous quarter's average. Any spike exceeding this without an attached production-volume justification must be flagged for "Manual Verification."

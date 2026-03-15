@@ -1,0 +1,17 @@
+Focus: Supplier Due Diligence and Material Origin
+
+Procurement Standard: Circular Economy & Value Chain (Scope 3)
+
+1. High-Risk Material Audit:
+
+This rule applies to all suppliers providing Semiconductors and Cobalt_Batteries.
+2. Mandatory SBTi Verification:
+
+Under the Corporate Sustainability Due Diligence Directive (CSDDD), any supplier of Cobalt must have a verified Science Based Targets initiative (SBTi) status.
+
+Anomaly Action: If sbti_verified is FALSE, the row is non-compliant.
+3. Recycled Input Threshold:
+
+To meet LuminaTech’s 2030 Net Zero goal, all battery and casing suppliers must demonstrate a recycled_input_rate of at least 0.20 (20%).
+
+Anomaly Action: Any rate below 0.20 must be flagged for "Supplier Remediation."

@@ -1,0 +1,6 @@
+supplier_id,material_category,origin_country,sbti_verified,recycled_input_rate,scope_3_tco2e
+SUP-A-101,Semiconductors,TW,TRUE,0.05,450.2
+SUP-B-202,Aluminum_Casing,CN,TRUE,0.85,120.5
+SUP-C-303,Cobalt_Batteries,CD,TRUE,0.25,890.1
+SUP-A-101,Semiconductors,TW,TRUE,0.06,460.0
+SUP-D-404,Packaging_Plastics,VN,TRUE,0.45,55.4
