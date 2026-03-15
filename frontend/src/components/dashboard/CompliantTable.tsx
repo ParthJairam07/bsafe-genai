@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { CheckCircle } from "lucide-react";
 import type { ColumnDef } from "@tanstack/react-table";
 import type { AuditRecord } from "../../types";
 import DataTable from "../common/DataTable";
@@ -26,9 +25,9 @@ export default function CompliantTable({ data }: CompliantTableProps) {
       id: "status",
       header: "Status",
       cell: () => (
-        <div className="flex items-center gap-1.5 text-emerald-600">
-          <CheckCircle className="w-4 h-4" />
-          <span className="text-xs font-medium">Compliant</span>
+        <div className="flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          <span className="text-[12px] font-medium text-emerald-700 font-sans">Pass</span>
         </div>
       ),
     };

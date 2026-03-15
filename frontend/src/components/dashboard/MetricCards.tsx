@@ -1,4 +1,3 @@
-import { FileCheck, AlertTriangle, TrendingUp } from "lucide-react";
 import { cn } from "../../lib/utils";
 
 interface MetricCardsProps {
@@ -8,46 +7,34 @@ interface MetricCardsProps {
 }
 
 export default function MetricCards({ totalRows, flaggedCount, complianceScore }: MetricCardsProps) {
-  const scoreColor =
-    complianceScore >= 90
-      ? "text-emerald-600"
-      : complianceScore >= 70
-        ? "text-amber-600"
-        : "text-red-600";
-
-  const scoreBg =
-    complianceScore >= 90
-      ? "bg-emerald-50 border-emerald-200"
-      : complianceScore >= 70
-        ? "bg-amber-50 border-amber-200"
-        : "bg-red-50 border-red-200";
+  const compliantCount = totalRows - flaggedCount;
 
   return (
-    <div className="grid grid-cols-3 gap-4">
-      <div className="bg-white border border-slate-200 rounded-xl p-6">
-        <div className="flex items-center gap-3 mb-2">
-          <FileCheck className="w-5 h-5 text-slate-400" />
-          <span className="text-sm text-slate-500">Total Rows Audited</span>
-        </div>
-        <p className="text-3xl font-bold text-slate-900">{totalRows}</p>
+    <div className="grid grid-cols-4 border border-zinc-200 rounded-lg bg-white divide-x divide-zinc-200">
+      <div className="px-5 py-4">
+        <p className="font-mono text-[26px] font-semibold text-zinc-900 leading-none">{totalRows}</p>
+        <p className="text-[11px] font-medium text-zinc-400 uppercase tracking-[0.06em] mt-2">Total Rows</p>
       </div>
-
-      <div className="bg-red-50 border border-red-200 rounded-xl p-6">
-        <div className="flex items-center gap-3 mb-2">
-          <AlertTriangle className="w-5 h-5 text-red-500" />
-          <span className="text-sm text-red-600">Rows Flagged</span>
-        </div>
-        <p className="text-3xl font-bold text-red-700">{flaggedCount}</p>
+      <div className="px-5 py-4">
+        <p className="font-mono text-[26px] font-semibold text-zinc-900 leading-none">{compliantCount}</p>
+        <p className="text-[11px] font-medium text-emerald-600 uppercase tracking-[0.06em] mt-2">Compliant</p>
       </div>
-
-      <div className={cn("border rounded-xl p-6", scoreBg)}>
-        <div className="flex items-center gap-3 mb-2">
-          <TrendingUp className={cn("w-5 h-5", scoreColor)} />
-          <span className={cn("text-sm", scoreColor)}>Compliance Score</span>
-        </div>
-        <p className={cn("text-3xl font-bold", scoreColor)}>
-          {complianceScore}%
-        </p>
+      <div className="px-5 py-4">
+        <p className={cn(
+          "font-mono text-[26px] font-semibold leading-none",
+          flaggedCount > 0 ? "text-red-600" : "text-zinc-900"
+        )}>{flaggedCount}</p>
+        <p className={cn(
+          "text-[11px] font-medium uppercase tracking-[0.06em] mt-2",
+          flaggedCount > 0 ? "text-red-500" : "text-zinc-400"
+        )}>Flagged</p>
+      </div>
+      <div className="px-5 py-4">
+        <p className={cn(
+          "font-mono text-[26px] font-semibold leading-none",
+          complianceScore >= 90 ? "text-emerald-600" : complianceScore >= 70 ? "text-amber-600" : "text-red-600"
+        )}>{complianceScore}%</p>
+        <p className="text-[11px] font-medium text-zinc-400 uppercase tracking-[0.06em] mt-2">Score</p>
       </div>
     </div>
   );

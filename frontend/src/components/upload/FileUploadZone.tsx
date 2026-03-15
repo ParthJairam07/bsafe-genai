@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from "react";
-import { Upload, FileSpreadsheet } from "lucide-react";
+import { Upload, FileSpreadsheet, ArrowRight } from "lucide-react";
 import { cn } from "../../lib/utils";
 
 interface FileUploadZoneProps {
@@ -12,23 +12,19 @@ export default function FileUploadZone({ onFileSelect, disabled }: FileUploadZon
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFile = useCallback(
-    (file: File) => {
-      if (!file.name.endsWith(".csv")) {
-        alert("Please upload a CSV file.");
-        return;
-      }
-      setSelectedFile(file);
-    },
-    []
-  );
+  const handleFile = useCallback((file: File) => {
+    if (!file.name.endsWith(".csv")) {
+      alert("Please upload a CSV file.");
+      return;
+    }
+    setSelectedFile(file);
+  }, []);
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
       e.preventDefault();
       setIsDragOver(false);
       if (disabled) return;
-
       const file = e.dataTransfer.files[0];
       if (file) handleFile(file);
     },
@@ -43,9 +39,7 @@ export default function FileUploadZone({ onFileSelect, disabled }: FileUploadZon
     [disabled]
   );
 
-  const handleDragLeave = useCallback(() => {
-    setIsDragOver(false);
-  }, []);
+  const handleDragLeave = useCallback(() => setIsDragOver(false), []);
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,9 +50,7 @@ export default function FileUploadZone({ onFileSelect, disabled }: FileUploadZon
   );
 
   const handleRunAudit = useCallback(() => {
-    if (selectedFile) {
-      onFileSelect(selectedFile);
-    }
+    if (selectedFile) onFileSelect(selectedFile);
   }, [selectedFile, onFileSelect]);
 
   return (
@@ -69,10 +61,10 @@ export default function FileUploadZone({ onFileSelect, disabled }: FileUploadZon
         onDragLeave={handleDragLeave}
         onClick={() => !disabled && fileInputRef.current?.click()}
         className={cn(
-          "border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all",
+          "border border-dashed rounded-md px-6 py-8 text-center cursor-pointer transition-colors",
           isDragOver
-            ? "border-emerald-500 bg-emerald-50"
-            : "border-slate-300 hover:border-slate-400 bg-white",
+            ? "border-zinc-900 bg-zinc-50"
+            : "border-zinc-300 hover:border-zinc-400",
           disabled && "opacity-50 cursor-not-allowed"
         )}
       >
@@ -86,22 +78,17 @@ export default function FileUploadZone({ onFileSelect, disabled }: FileUploadZon
         />
 
         {selectedFile ? (
-          <div className="space-y-2">
-            <FileSpreadsheet className="w-12 h-12 text-emerald-600 mx-auto" />
-            <p className="text-lg font-medium text-slate-900">{selectedFile.name}</p>
-            <p className="text-sm text-slate-500">
-              {(selectedFile.size / 1024).toFixed(1)} KB
+          <div className="space-y-1">
+            <FileSpreadsheet className="w-5 h-5 text-zinc-900 mx-auto" />
+            <p className="text-[14px] font-medium text-zinc-900">{selectedFile.name}</p>
+            <p className="text-[12px] text-zinc-400">
+              {(selectedFile.size / 1024).toFixed(1)} KB &middot; Click to change
             </p>
           </div>
         ) : (
-          <div className="space-y-2">
-            <Upload className="w-12 h-12 text-slate-400 mx-auto" />
-            <p className="text-lg font-medium text-slate-700">
-              Drop your CSV file here
-            </p>
-            <p className="text-sm text-slate-500">
-              or click to browse. Supports Facility Telemetry and Supply Chain data.
-            </p>
+          <div className="space-y-1">
+            <Upload className="w-5 h-5 text-zinc-400 mx-auto" />
+            <p className="text-[14px] font-medium text-zinc-600">Drop CSV here or click to browse</p>
           </div>
         )}
       </div>
@@ -111,13 +98,14 @@ export default function FileUploadZone({ onFileSelect, disabled }: FileUploadZon
           onClick={handleRunAudit}
           disabled={disabled}
           className={cn(
-            "w-full py-3 px-6 rounded-lg font-semibold text-white transition-colors",
+            "w-full py-2.5 rounded-md text-[13px] font-semibold text-white flex items-center justify-center gap-1.5 transition-colors",
             disabled
-              ? "bg-slate-300 cursor-not-allowed"
-              : "bg-emerald-600 hover:bg-emerald-700"
+              ? "bg-zinc-300 cursor-not-allowed"
+              : "bg-zinc-900 hover:bg-zinc-800"
           )}
         >
-          Run ESG Audit
+          Run Audit
+          <ArrowRight className="w-3.5 h-3.5" />
         </button>
       )}
     </div>

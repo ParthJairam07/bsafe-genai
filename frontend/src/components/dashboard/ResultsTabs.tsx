@@ -16,34 +16,39 @@ export default function ResultsTabs({ compliantRecords, flaggedRecords }: Result
 
   return (
     <div className="space-y-4">
-      <div className="flex gap-1 bg-slate-100 rounded-lg p-1 w-fit">
+      <div className="flex items-center gap-1 border-b border-zinc-200">
         <button
           onClick={() => setActiveTab("compliant")}
           className={cn(
-            "flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors",
+            "relative px-3 pb-2.5 text-[13px] font-medium transition-colors",
             activeTab === "compliant"
-              ? "bg-white text-emerald-700 shadow-sm"
-              : "text-slate-600 hover:text-slate-900"
+              ? "text-zinc-900"
+              : "text-zinc-400 hover:text-zinc-600"
           )}
         >
-          Compliant Records
-          <span className="inline-flex items-center justify-center w-6 h-6 text-xs rounded-full bg-emerald-100 text-emerald-700">
-            {compliantRecords.length}
-          </span>
+          Compliant
+          <span className="ml-1.5 font-mono text-[12px]">{compliantRecords.length}</span>
+          {activeTab === "compliant" && (
+            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-zinc-900 rounded-full" />
+          )}
         </button>
         <button
           onClick={() => setActiveTab("flagged")}
           className={cn(
-            "flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors",
+            "relative px-3 pb-2.5 text-[13px] font-medium transition-colors",
             activeTab === "flagged"
-              ? "bg-white text-red-700 shadow-sm"
-              : "text-slate-600 hover:text-slate-900"
+              ? "text-zinc-900"
+              : "text-zinc-400 hover:text-zinc-600"
           )}
         >
-          Flagged Records
-          <span className="inline-flex items-center justify-center w-6 h-6 text-xs rounded-full bg-red-100 text-red-700">
-            {flaggedRecords.length}
-          </span>
+          Flagged
+          <span className={cn(
+            "ml-1.5 font-mono text-[12px]",
+            activeTab === "flagged" && flaggedRecords.length > 0 ? "text-red-500" : ""
+          )}>{flaggedRecords.length}</span>
+          {activeTab === "flagged" && (
+            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-zinc-900 rounded-full" />
+          )}
         </button>
       </div>
 
@@ -51,15 +56,15 @@ export default function ResultsTabs({ compliantRecords, flaggedRecords }: Result
         compliantRecords.length > 0 ? (
           <CompliantTable data={compliantRecords} />
         ) : (
-          <div className="bg-white border border-slate-200 rounded-xl p-12 text-center text-slate-400">
-            No compliant records found.
+          <div className="border border-zinc-200 rounded-lg bg-white p-12 text-center text-[13px] text-zinc-400">
+            No compliant records.
           </div>
         )
       ) : flaggedRecords.length > 0 ? (
         <FlaggedTable data={flaggedRecords} />
       ) : (
-        <div className="bg-white border border-emerald-200 rounded-xl p-12 text-center text-emerald-600">
-          All records are compliant. No flags raised.
+        <div className="border border-emerald-200 rounded-lg bg-emerald-50 p-12 text-center text-[13px] text-emerald-700">
+          All records passed compliance checks.
         </div>
       )}
     </div>

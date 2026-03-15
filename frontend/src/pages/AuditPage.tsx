@@ -14,58 +14,67 @@ export default function AuditPage() {
   const { state, startAudit, reset } = useAudit();
 
   return (
-    <div className="space-y-6 max-w-6xl">
-      {/* Upload Section -- shown when idle or error */}
+    <div>
+      {/* Upload */}
       {(state.status === "idle" || state.status === "error") && (
-        <div className="space-y-6">
-          <div>
-            <h3 className="text-lg font-semibold text-slate-900 mb-1">Upload Dataset</h3>
-            <p className="text-sm text-slate-500">
-              Select your dataset type and upload a CSV file to begin the ESG compliance audit.
-            </p>
+        <div className="pt-10">
+          <h1 className="text-[22px] font-semibold text-zinc-900 tracking-tight">
+            Compliance Audit
+          </h1>
+          <p className="text-[14px] text-zinc-500 mt-1.5 max-w-lg">
+            Upload CSV telemetry and validate each row against ESG standard operating procedures.
+          </p>
+
+          <div className="mt-8 border border-zinc-200 rounded-lg bg-white">
+            <div className="p-6">
+              <DatasetSelector value={datasetType} onChange={setDatasetType} />
+            </div>
+            <div className="border-t border-zinc-100 p-6">
+              <FileUploadZone onFileSelect={startAudit} />
+            </div>
           </div>
 
-          <DatasetSelector value={datasetType} onChange={setDatasetType} />
-          <FileUploadZone onFileSelect={startAudit} />
-
           {state.status === "error" && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700">
+            <div className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-[13px] text-red-700">
               {state.error}
             </div>
           )}
         </div>
       )}
 
-      {/* Processing -- show progress bar */}
+      {/* Processing */}
       {state.status === "processing" && state.progress && (
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-slate-900">Audit in Progress</h3>
-          <ProgressBar
-            current={state.progress.current}
-            total={state.progress.total}
-            status="processing"
-          />
-          <p className="text-sm text-slate-500 text-center">
-            Each row is being evaluated against ESG compliance rules via the RAG pipeline...
-          </p>
+        <div className="pt-10">
+          <h1 className="text-[22px] font-semibold text-zinc-900 tracking-tight">
+            Auditing...
+          </h1>
+          <div className="mt-6 border border-zinc-200 rounded-lg bg-white p-6">
+            <ProgressBar
+              current={state.progress.current}
+              total={state.progress.total}
+              status="processing"
+            />
+          </div>
         </div>
       )}
 
-      {/* Results Dashboard */}
+      {/* Results */}
       {state.status === "complete" && state.result && (
-        <div className="space-y-6">
+        <div className="pt-10 space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-semibold text-slate-900">Audit Results</h3>
-              <p className="text-sm text-slate-500">
-                {datasetType === "facility" ? "Facility Telemetry" : "Supply Chain"} audit complete.
+              <h1 className="text-[22px] font-semibold text-zinc-900 tracking-tight">
+                Audit Results
+              </h1>
+              <p className="text-[13px] text-zinc-400 mt-0.5">
+                {datasetType === "facility" ? "Facility Telemetry" : "Supply Chain"} &middot; {state.result.total_rows} rows audited
               </p>
             </div>
             <button
               onClick={reset}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium text-zinc-600 border border-zinc-200 rounded-md hover:bg-zinc-50 transition-colors"
             >
-              <RotateCcw className="w-4 h-4" />
+              <RotateCcw className="w-3.5 h-3.5" />
               New Audit
             </button>
           </div>

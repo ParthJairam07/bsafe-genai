@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { AlertTriangle } from "lucide-react";
 import type { ColumnDef } from "@tanstack/react-table";
 import type { AuditRecord } from "../../types";
 import DataTable from "../common/DataTable";
@@ -22,13 +21,12 @@ export default function FlaggedTable({ data }: FlaggedTableProps) {
       id: "status",
       header: "Status",
       cell: (info) => {
-        const compliant = info.row.original.compliant;
-        const isError = compliant === "ERROR";
+        const isError = info.row.original.compliant === "ERROR";
         return (
           <div className="flex items-center gap-1.5">
-            <AlertTriangle className={`w-4 h-4 ${isError ? "text-amber-500" : "text-red-500"}`} />
-            <span className={`text-xs font-medium ${isError ? "text-amber-600" : "text-red-600"}`}>
-              {isError ? "Error" : "Violation"}
+            <span className={`w-1.5 h-1.5 rounded-full ${isError ? "bg-amber-500" : "bg-red-500"}`} />
+            <span className={`text-[12px] font-medium font-sans ${isError ? "text-amber-700" : "text-red-700"}`}>
+              {isError ? "Error" : "Fail"}
             </span>
           </div>
         );
@@ -37,15 +35,12 @@ export default function FlaggedTable({ data }: FlaggedTableProps) {
 
     const ruleCol: ColumnDef<AuditRecord, unknown> = {
       accessorKey: "rule_id",
-      header: "Rule ID",
-      cell: (info) => {
-        const val = String(info.getValue() ?? "");
-        return (
-          <span className="inline-block px-2 py-1 text-xs font-semibold bg-red-100 text-red-800 rounded-full">
-            {val}
-          </span>
-        );
-      },
+      header: "Rule",
+      cell: (info) => (
+        <span className="text-[12px] font-semibold text-red-600 font-sans">
+          {String(info.getValue() ?? "")}
+        </span>
+      ),
     };
 
     const dataCols: ColumnDef<AuditRecord, unknown>[] = keys.map((key) => ({
@@ -58,9 +53,9 @@ export default function FlaggedTable({ data }: FlaggedTableProps) {
       accessorKey: "reason",
       header: "Reason",
       cell: (info) => (
-        <div className="max-w-xs text-xs text-red-700 bg-red-50 px-3 py-2 rounded-lg border border-red-200">
+        <p className="max-w-xs text-[12px] leading-relaxed text-red-800 font-sans">
           {String(info.getValue() ?? "")}
-        </div>
+        </p>
       ),
     };
 
@@ -71,7 +66,7 @@ export default function FlaggedTable({ data }: FlaggedTableProps) {
     <DataTable
       data={data}
       columns={columns}
-      rowClassName={() => "bg-red-50/30"}
+      rowClassName={() => "!bg-red-50/50"}
     />
   );
 }
